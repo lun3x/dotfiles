@@ -96,6 +96,17 @@ return {
 									files = {
 										excludeDirs = { "target", "node_modules", ".git", "dist" },
 									},
+
+									-- Inline hints. Rendering is switched on in LspAttach below;
+									-- this only decides which kinds rust-analyzer bothers to send.
+									inlayHints = {
+										typeHints = { enable = true },
+										parameterHints = { enable = true },
+										chainingHints = { enable = true },
+										-- "// fn foo" after a long block: noise at this scale
+										closingBraceHints = { enable = false },
+										maxLength = 30,
+									},
 								},
 							},
 						},
@@ -249,6 +260,22 @@ return {
 
 					vim.keymap.set("n", "<space>cr", vim.lsp.buf.rename, { buffer = bufnr })
 					vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, { buffer = bufnr })
+
+					-- Inline type/parameter hints, on for Rust and toggleable anywhere the
+					-- server offers them. Drop the filetype test to have them everywhere.
+					-- Keyed on filetype, not client name: rustaceanvim calls its client
+					-- "rust-analyzer", lspconfig would call it "rust_analyzer".
+					if client:supports_method("textDocument/inlayHint", bufnr) then
+						if vim.bo[bufnr].filetype == "rust" then
+							vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+						end
+						vim.keymap.set("n", "<space>ch", function()
+							vim.lsp.inlay_hint.enable(
+								not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }),
+								{ bufnr = bufnr }
+							)
+						end, { buffer = bufnr })
+					end
 
 					local filetype = vim.bo[bufnr].filetype
 					if disable_semantic_tokens[filetype] then
