@@ -214,7 +214,14 @@ return {
 			}
 
 			vim.list_extend(ensure_installed, servers_to_install)
-			require("mason-lspconfig").setup({ ensure_installed = ensure_installed })
+			require("mason-lspconfig").setup({
+				ensure_installed = ensure_installed,
+				-- rustaceanvim owns the Rust LSP client. Without this exclusion,
+				-- mason-lspconfig also starts rust_analyzer when it is installed.
+				automatic_enable = {
+					exclude = { "rust_analyzer" },
+				},
+			})
 
 			for name, config in pairs(servers) do
 				if config == true then

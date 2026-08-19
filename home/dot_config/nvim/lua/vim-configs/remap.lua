@@ -1,5 +1,9 @@
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
+-- navigate the jump list with the mouse's back and forward buttons
+vim.keymap.set("n", "<X1Mouse>", "<C-o>")
+vim.keymap.set("n", "<X2Mouse>", "<C-i>")
+
 -- keep cursor in the middle of screen when jumping up/down
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
