@@ -80,9 +80,10 @@ return {
 									cachePriming = {
 										enable = false,
 									},
-									-- Don't eagerly load all feature flags
+									-- All features, so feature-gated modules get analysed even when nothing
+									-- in the open file's workspace enables the feature. Costs RAM.
 									cargo = {
-										allFeatures = false,
+										allFeatures = true,
 										buildScripts = { enable = true }, -- proc macros
 									},
 									-- The boolean toggle
