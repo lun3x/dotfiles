@@ -19,6 +19,13 @@ o.tabstop = 4
 
 o.wrap = false
 
+vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter" }, {
+	group = vim.api.nvim_create_augroup("FiletypeWrap", { clear = true }),
+	callback = function()
+		vim.wo.wrap = vim.bo.filetype == "markdown" or vim.bo.filetype == "text"
+	end,
+})
+
 o.swapfile = false
 o.backup = false
 o.undodir = os.getenv("HOME") .. "/.vim/undodir"
@@ -46,3 +53,8 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
 })
 
 o.cursorline = true
+
+-- Render the current line's diagnostics as virtual lines beneath it
+vim.diagnostic.config({
+	virtual_lines = { current_line = true },
+})
