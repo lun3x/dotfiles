@@ -20,8 +20,12 @@ Managed:
 Runtime tools used by configs:
  
 ```sh
-brew install neovim tmux fzf ripgrep
+brew install neovim tree-sitter-cli tmux fzf ripgrep
 ```
+
+Neovim's Tree-sitter parser installation requires `tree-sitter-cli` (0.26.1 or later)
+and a C compiler in `PATH`. Homebrew's `tree-sitter` library package does not include
+the `tree-sitter` executable; install `tree-sitter-cli` separately as shown above.
  
 Ghostty: install separately ([ghostty.org](https://ghostty.org/)).
 

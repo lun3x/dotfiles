@@ -1,6 +1,8 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	branch = "main",
+	lazy = false,
+	build = ":TSUpdate",
 	init = function()
 		-- Highlighting per-buffer
 		vim.api.nvim_create_autocmd("FileType", {
