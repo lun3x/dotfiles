@@ -69,7 +69,7 @@ return {
 				-- "I strongly recommend against using rust-analyzer managed by mason.nvim, as version mismatches between
 				-- rust-analyzer and your project toolchain can and most likely will lead to subtle issues."
 				"mrcjkb/rustaceanvim",
-				version = "^6",
+				version = "^7",
 				lazy = false,
 				init = function()
 					vim.g.rustaceanvim = {
